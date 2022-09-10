@@ -52,3 +52,8 @@ export const loginUser: RequestHandler = async (req, res, next) => {
         res.status(401).json('Invalid username');
     }
 }
+
+export const getAllUsers: RequestHandler = async (req, res, next) => {
+    let usersList = await User.find();
+    res.status(200).json(usersList);
+}
