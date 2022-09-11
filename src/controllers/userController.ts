@@ -57,3 +57,32 @@ export const getAllUsers: RequestHandler = async (req, res, next) => {
     let usersList = await User.find();
     res.status(200).json(usersList);
 }
+
+export const getOneUser: RequestHandler = async (req, res, next) => {
+    let userId = req.params.id;
+    let user = await User.findById(userId);
+    res.status(200).json(user);
+}
+
+export const editUser: RequestHandler = async (req, res, next) => {
+    let user: IUser | null = await verifyUser(req);
+
+    if (!user) {
+        return res.status(403).send();
+    }
+
+    let userId = req.params.id;
+    const updatedUser: IUser = new User({
+        _id: userId,
+        username: user.username,
+        password: req.body.password,
+        firstName: req.body.firstName,
+        lastName: req.body.lastName,
+        city: req.body.city,
+        state: req.body.state
+    });
+
+    await User.findByIdAndUpdate(userId, { $set: updatedUser })
+
+    res.status(200).json(updatedUser);
+}

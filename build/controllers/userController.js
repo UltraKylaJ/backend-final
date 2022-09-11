@@ -9,7 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getAllUsers = exports.loginUser = exports.createUser = void 0;
+exports.editUser = exports.getOneUser = exports.getAllUsers = exports.loginUser = exports.createUser = void 0;
 const user_1 = require("../models/user");
 const auth_1 = require("../services/auth");
 const createUser = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
@@ -63,3 +63,28 @@ const getAllUsers = (req, res, next) => __awaiter(void 0, void 0, void 0, functi
     res.status(200).json(usersList);
 });
 exports.getAllUsers = getAllUsers;
+const getOneUser = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    let userId = req.params.id;
+    let user = yield user_1.User.findById(userId);
+    res.status(200).json(user);
+});
+exports.getOneUser = getOneUser;
+const editUser = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    let user = yield (0, auth_1.verifyUser)(req);
+    if (!user) {
+        return res.status(403).send();
+    }
+    let userId = req.params.id;
+    const updatedUser = new user_1.User({
+        _id: userId,
+        username: user.username,
+        password: req.body.password,
+        firstName: req.body.firstName,
+        lastName: req.body.lastName,
+        city: req.body.city,
+        state: req.body.state
+    });
+    yield user_1.User.findByIdAndUpdate(userId, { $set: updatedUser });
+    res.status(200).json(updatedUser);
+});
+exports.editUser = editUser;
