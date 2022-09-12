@@ -10,6 +10,8 @@ import UserProfile from './components/Profile';
 import UserList from './components/UserList';
 import { UserProvider } from './contexts/UserProvider';
 import { PostProvider } from './contexts/PostProvider';
+import Navbar from './components/Navbar';
+import SignOut from './components/SignOut';
 
 function App() {
   return (
@@ -17,19 +19,11 @@ function App() {
     <PostProvider>
       <div>
           <BrowserRouter>
-              <nav>
-                  <Link to="/signup">Sign Up</Link>
-                  <span> | </span>
-                  <Link to="/signin">Sign In</Link>
-                  <span> | </span>
-                  <Link to="/posts">Home Feed</Link>
-                  <span> | </span>
-                  <Link to="/users">Users</Link>
-                  <hr></hr>
-              </nav>
+              <Navbar />
               <Routes>
                   <Route exact path="/" element={ <SignIn /> } />
                   <Route path="/signin" element={ <SignIn /> } />
+                  <Route path="/signout" element={ <SignOut /> } />
                   <Route path="/signup" element={ <SignUp /> } />
                   <Route path="/users/edit/:userId" element={ <EditUser /> } />
                   <Route path="/users" element={ <UserList /> } />

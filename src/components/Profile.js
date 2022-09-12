@@ -7,7 +7,8 @@ import axios from 'axios';
 const UserProfile = () => {
 
     let [user, setUser] = useState({});
-    let [post, setPosts] = useState([]);
+    let [post, setPost] = useState([]);
+    let [posts, setAllPosts] = useState([]);
 
     let params = useParams();
 
@@ -26,35 +27,77 @@ const UserProfile = () => {
         }, [params.userId, getUser]
     );
 
-    // function getPostsEffect () {
-    //     const postArray = getAllPosts();
-    //     console.log(postArray);
-    //     return postArray
+    let userUsername = user.username;
+
+
+
+
+
+
+    // let { getPost } = useContext(UserContext);
+
+    // useEffect(() => {
+    //     async function fetch() {
+    //       await getPost(params.postId)
+    //         .then((post) => setPost(post))
+    //         .catch((error) => console.log(error))
+    //     }
+    //     fetch()
+    //   }, [params.postId, getPost]
+    // );
+  
+    // function handleSubmit(event) {
+    //     event.preventDefault();
+    //     editUser(user).then(() => {
+    //         navigate(`/user/profile/${user.id}`);
+    //     }).catch(error => {
+    //         console.log(user);
+    //         console.log(error);
+    //         navigate('/signin');
+    //     });
     // }
-    // function matchUsernames() {
-    //     if (user.username === post.username) {
+
+
+
+
+
+
+
+    // function userPosts(userUsername) {
+    //     function listAllPosts() {
     //         return (
     //             <PostContext.Consumer>
     //             {
     //                 ({ post }) => {
-    //                     return (
-    //                         <div>
+    //                     return <div>
     //                             {post.map((p) => {
     //                                 return (
     //                                     <div key={p.id}>
     //                                         <h5>{p.username} | {p.datePosted}</h5>
     //                                         <p>{p.message}</p>
-    //                                     </div>
-    //                                 )
-    //                             })}
-    //                         </div>
-    //                     )
+    //                                  </div>
+    //                             )
+    //                         })}
+    //                     </div>
     //                 }
     //             }
     //             </PostContext.Consumer>
+    //         );
+    //     }
+
+    //     if (userUsername === post.username) {
+    //         return (
+    //             <div key={post.id}>
+    //                 <h5>{post.username} | {post.datePosted}</h5>
+    //                 <p>{post.message}</p>
+    //             </div>
     //         )
     //     }
+    //     else {
+    //         return <h4>This user has yet to post!</h4>
+    //     }
     // }
+
 
     // setPosts(matchUsernames());
 
@@ -74,32 +117,35 @@ const UserProfile = () => {
     //     return axios.get(url).then(response => setPosts(response.data));
     // }
 
+    function getPostUsernames() {
+        return (
+            <PostContext.Consumer>
+            {
+                ({ post }) => {
+                    return <div>
+                            {post.map((p) => {
+                                return (
+                                    <div>{p.username}</div>
+                                )
+                            })}
+                    </div>
+                }
+            }
+            </PostContext.Consumer>
+        );
+    }
+
+
     return (
-            <div>
+            <div key={user.id}>
                 <h1>User Profile: {user.username}</h1>
                 <h3>Name: {user.firstName} {user.lastName}</h3>
                 <h3>Location: {user.city}, {user.state}</h3>
                 <h>Profile Created On: {user.createdAt}</h>
                     <br/><hr></hr><br/>
                 {console.log(user)}
-                <PostContext.Consumer>
-                {
-                    ({ post }) => {
-                        return (
-                            <div>
-                                {post.map((p) => {
-                                    return (
-                                        <div key={p.id}>
-                                            <h5>{p.username} | {p.datePosted}</h5>
-                                            <p>{p.message}</p>
-                                        </div>
-                                    )
-                                })}
-                            </div>
-                        )
-                    }
-                }
-                </PostContext.Consumer>
+                {/* {userPosts()} */}
+                {getPostUsernames()}
             </div>
     );
 }
