@@ -26,6 +26,38 @@ const UserProfile = () => {
         }, [params.userId, getUser]
     );
 
+    // function getPostsEffect () {
+    //     const postArray = getAllPosts();
+    //     console.log(postArray);
+    //     return postArray
+    // }
+    // function matchUsernames() {
+    //     if (user.username === post.username) {
+    //         return (
+    //             <PostContext.Consumer>
+    //             {
+    //                 ({ post }) => {
+    //                     return (
+    //                         <div>
+    //                             {post.map((p) => {
+    //                                 return (
+    //                                     <div key={p.id}>
+    //                                         <h5>{p.username} | {p.datePosted}</h5>
+    //                                         <p>{p.message}</p>
+    //                                     </div>
+    //                                 )
+    //                             })}
+    //                         </div>
+    //                     )
+    //                 }
+    //             }
+    //             </PostContext.Consumer>
+    //         )
+    //     }
+    // }
+
+    // setPosts(matchUsernames());
+
     // useEffect(() => {
     //     async function fetchPosts() {
     //         await listPosts(params.username)
